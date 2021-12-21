@@ -9,8 +9,17 @@ def homepage(request):
 
 
 def itemspage(request):
-    items = Item.objects.all()
-    return render(request, template_name='main/items.html', context={'items':items})
+    if request.method == 'GET':
+        items = Item.objects.all().filter(owner=None)
+        return render(request, template_name='main/items.html', context={'items':items})
+    if request.method == 'POST':
+        purchase_item = request.POST.get('purchased-item')
+        if purchase_item:
+            purchased_item_object = Item.objects.get(name=purchase_item)
+            purchased_item_object.owner = request.user
+            purchased_item_object.save()
+            print(f'{purchase_item} bought!!!')
+        return redirect('items')
 
 def loginpage(request):
     if request.method == 'GET':
