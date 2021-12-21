@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from main.models import Item
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 # Create your views here.
 
 def homepage(request):
@@ -18,7 +19,7 @@ def itemspage(request):
             purchased_item_object = Item.objects.get(name=purchase_item)
             purchased_item_object.owner = request.user
             purchased_item_object.save()
-            print(f'{purchase_item} bought!!!')
+            messages.success(request, f'Congratulations you now own this {purchased_item_object.name}')
         return redirect('items')
 
 def loginpage(request):
@@ -30,8 +31,10 @@ def loginpage(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, f'You are logged in as {user.username} !')
             return redirect('items')
         else:
+            messages.error(request, 'Combination of username and password is wrong')
             return redirect('login')
 
 def registerpage(request):
@@ -46,12 +49,15 @@ def registerpage(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
+            messages.success(request, f'You have successfully created a new account!. Logged in as {user.username}')
             return redirect('home')
         else:
+            messages.error(request, form.errors)
             return redirect('register')
 
 
 
 def logoutpage(request):
     logout(request)
+    messages.success(request, f'You have logged out!')
     return redirect('home')

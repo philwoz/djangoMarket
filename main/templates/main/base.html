@@ -14,8 +14,14 @@
   </head>
 
   <body>
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert">
+      {{message}}
+    </div>
+    {% endfor %}
+  {% endif %}
   {% include 'main/include/navbar.html'%}
-
   {% block pageheader %}
   {% endblock %}
 
