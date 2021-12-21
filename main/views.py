@@ -12,7 +12,7 @@ def homepage(request):
 def itemspage(request):
     if request.method == 'GET':
         items = Item.objects.all().filter(owner=None)
-        return render(request, template_name='main/items.html', context={'items':items})
+        return render(request, template_name='main/items.html', context={'items': items})
     if request.method == 'POST':
         purchase_item = request.POST.get('purchased-item')
         if purchase_item:
@@ -21,6 +21,13 @@ def itemspage(request):
             purchased_item_object.save()
             messages.success(request, f'Congratulations you now own this {purchased_item_object.name}')
         return redirect('items')
+
+def myitemspage(request):
+
+    if request.method == 'GET':
+        # user = request.user
+        items = Item.objects.all().filter(owner=request.user)
+        return render(request, template_name='main/myitemspage.html', context={'items': items})
 
 def loginpage(request):
     if request.method == 'GET':
