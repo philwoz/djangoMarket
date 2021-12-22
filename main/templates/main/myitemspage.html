@@ -23,16 +23,16 @@ Django Market My Items
             <img alt="image" style="width:44px" src="{{ item.image_url}}">
         </td>
         <td>£{{ item.price }}</td>
-<!--        <td>-->
-<!--            <button type="button" class="btn btn-outline-primary"-->
-<!--                    data-toggle="modal" data-target="#Modal-MoreInfo{{ item.pk }}">-->
-<!--                More Info-->
-<!--            </button>-->
-<!--            <button type="button" class="btn btn-outline-success"-->
-<!--                    data-toggle="modal" data-target="#Modal-PurchaseConfirm{{ item.pk }}">-->
-<!--                Purchase this Item-->
-<!--            </button>-->
-<!--        </td>-->
+        <td>
+            <button type="button" class="btn btn-outline-primary"
+                    data-toggle="modal" data-target="#Modal-MoreInfo{{ item.pk }}">
+                More Info
+            </button>
+            <button type="button" class="btn btn-outline-success"
+                    data-toggle="modal" data-target="#Modal-SellConfirm{{ item.pk }}">
+                Sell Item
+            </button>
+        </td>
 
 
     </tr>

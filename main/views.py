@@ -29,6 +29,15 @@ def myitemspage(request):
         items = Item.objects.all().filter(owner=request.user)
         return render(request, template_name='main/myitemspage.html', context={'items': items})
 
+    if request.method == 'POST':
+        sold_item = request.POST.get('sold-item')
+        if sold_item:
+            sold_item_object = Item.objects.get(name=sold_item)
+            sold_item_object.owner = None
+            sold_item_object.save()
+            messages.success(request, f'Success you sold {sold_item_object.name} back to the market')
+            return redirect('myitemspage')
+
 def loginpage(request):
     if request.method == 'GET':
         return render(request, template_name='main/login.html')
